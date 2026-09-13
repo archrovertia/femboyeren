@@ -26,7 +26,6 @@
       z-index: 10;
     }
 
-    /* Dinamik Yönerge Metni */
     .instruction {
       font-size: 18px;
       color: #00ffff;
@@ -38,7 +37,6 @@
       font-weight: bold;
     }
 
-    /* ANA RESİM VE ETKİLEŞİM ALANI */
     .meme-container {
       position: relative;
       width: 90%;
@@ -53,7 +51,6 @@
       display: block;
     }
 
-    /* GÖRÜNMEZ TIKLANABİLİR BÖLGELER */
     .clickable-zone {
       position: absolute;
       cursor: pointer;
@@ -66,100 +63,48 @@
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     }
 
-    #zone-gifts {
-      bottom: 2%;
-      left: 2%;
-      width: 25%;
-      height: 25%;
-    }
-
-    #zone-speaker {
-      bottom: 2%;
-      right: 2%;
-      width: 20%;
-      height: 25%;
-    }
-
+    #zone-gifts { bottom: 2%; left: 2%; width: 25%; height: 25%; }
+    #zone-speaker { bottom: 2%; right: 2%; width: 20%; height: 25%; }
     #zone-cake {
-      bottom: 16%;
-      left: 38%;
-      width: 24%;
-      height: 18%;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: flex-start;
-      padding-top: 5%;
-      box-sizing: border-box;
+      bottom: 16%; left: 38%; width: 24%; height: 18%;
+      display: flex; justify-content: space-evenly; align-items: flex-start;
+      padding-top: 5%; box-sizing: border-box;
     }
 
-    /* HAREKETLİ ALEVLER */
     .flame {
-      width: 12px;
-      height: 20px;
-      background: #ff9100;
+      width: 12px; height: 20px; background: #ff9100;
       border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
       box-shadow: 0 0 10px #ffea00, 0 0 20px #ff9100;
       animation: flicker 0.15s infinite alternate;
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
-
-    .flame.blown-out {
-      opacity: 0;
-      transform: scale(0.1) translateY(-20px);
-    }
+    .flame.blown-out { opacity: 0; transform: scale(0.1) translateY(-20px); }
 
     @keyframes flicker {
       0% { transform: scale(1) rotate(-3deg); }
       100% { transform: scale(1.1) rotate(3deg); }
     }
 
-    /* POPUP MESAJ KUTUSU */
     .popup-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8);
+      display: none; justify-content: center; align-items: center; z-index: 50;
     }
-
-    .popup-overlay.show {
-      display: flex;
-    }
-
+    .popup-overlay.show { display: flex; }
     .popup-content {
-      background: #1a1a1a;
-      padding: 30px;
-      border: 3px solid #00ffff;
-      border-radius: 0;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 8px 8px 0px #ff3366;
+      background: #1a1a1a; padding: 30px; border: 3px solid #00ffff;
+      max-width: 400px; text-align: center; box-shadow: 8px 8px 0px #ff3366;
     }
-
     .popup-content h3 { color: #00ffff; margin-top: 0; }
     .popup-content p { color: #fff; font-size: 18px; line-height: 1.5; }
     
     .close-btn {
-      background: #ff3366;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 15px;
+      background: #ff3366; color: #fff; border: none; padding: 10px 20px;
+      font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px;
       font-family: 'Courier New', Courier, monospace;
     }
 
-    /* KONFETİ PATLAMA EFEKTİ */
     .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      z-index: 9999;
-      pointer-events: none;
+      position: fixed; width: 10px; height: 10px; z-index: 9999; pointer-events: none;
     }
 
     @keyframes explode {
@@ -167,62 +112,38 @@
       100% { transform: translate3d(var(--tx), var(--ty), 0) scale(0) rotate(720deg); opacity: 0; }
     }
 
-    /* FİNAL VİDEO EKRANI */
     #videoContainer {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      opacity: 0;
-      transition: opacity 1.5s ease;
+      position: fixed; inset: 0; background: #000;
+      display: none; justify-content: center; align-items: center;
+      z-index: 10000; opacity: 0; transition: opacity 1.5s ease;
     }
-
     #congratsVideo {
-      width: 100%;
-      height: 100%;
-      max-height: 100vh;
-      object-fit: contain;
+      width: 100%; height: 100%; max-height: 100vh; object-fit: contain;
     }
 
-    /* EREN FOTO 1 (İLK 12 SANİYE MAID) */
+    /* EREN FOTOLARI */
     #erenOverlay {
-      position: absolute;
-      top: 12%; 
-      left: 50%;
-      transform: translateX(-50%);
-      height: 60vh; 
-      z-index: 10001; 
-      display: none;
-      pointer-events: none;
+      position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+      height: 60vh; z-index: 10001; display: none; pointer-events: none;
     }
-
-    /* EREN FOTO 2 (32-35 SANİYE ARASI YAKIN ÇEKİM TROLL) */
     #erenOverlay2 {
-      position: absolute;
-      top: 50%; 
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 80vh; 
-      z-index: 10001; 
-      display: none;
-      pointer-events: none;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      height: 80vh; z-index: 10001; display: none; pointer-events: none;
     }
 
-    /* SADECE ÜSTÜ KAPATAN SİYAH MASKE VE YAZI (FİNAL) */
+    /* FİNAL YAZISI - KESİNLİKLE EN ÜSTTE OLACAK ŞEKİLDE GÜNCELLENDİ */
     #trollSubtitle {
       position: absolute;
-      top: 0; /* Sadece ekranın üstüne yapışır */
+      top: 0; /* Ekranın tavanına yapışır */
       left: 0;
       width: 100%;
-      height: 35vh; /* Ekranın sadece üst %35'ini kapatır (Altyazının olduğu yer) */
+      height: 35vh; /* Sadece üst kısmı bant gibi kapatır */
       background: #000; 
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start; /* İçindeki yazıyı da yukarı iter */
       align-items: center;
+      padding-top: 5vh; /* Yazıyı tepeden azıcık aşağı boşluklu bırakır */
       color: #fff;
       font-size: clamp(20px, 4vw, 32px);
       text-align: center;
@@ -231,8 +152,6 @@
       pointer-events: none;
       transition: opacity 0.5s ease;
       z-index: 10002;
-      padding: 0 20px;
-      box-sizing: border-box;
     }
     
     .highlight-pink { color: #ff3366; font-weight: bold; margin-top: 15px; display: block; }
@@ -243,10 +162,8 @@
 <body>
 
   <h1>MUTLU YILLAR EREN</h1>
-  
   <p class="instruction" id="instructionText">ADIM 1: Önce sağ alttaki hoparlörden müziği aç.</p>
 
-  <!-- SES DOSYALARI -->
   <audio id="bgMusic" src="eren-muzik.mp3" preload="auto" loop></audio>
   <audio id="confettiSound" src="konfeti-sesi.mp3" preload="auto"></audio>
 
@@ -269,17 +186,13 @@
     </div>
   </div>
 
-  <!-- FİNAL VİDEO EKRANI, FOTOĞRAFLAR VE TROLL YAZI -->
   <div id="videoContainer">
     <video id="congratsVideo" src="evangelion.mp4" playsinline></video>
     
-    <!-- İLK 12 SANİYE: MAID EREN (Yeni sade isim) -->
+    <!-- FOTOĞRAFLAR: eren1.jpg ve eren2.jpg olarak GitHub'a yüklemeyi unutma! -->
     <img id="erenOverlay" src="eren1.jpg" alt="Eren Maid Sürprizi">
-
-    <!-- 32 - 35 SANİYE ARASI: BAŞÖRTÜLÜ EREN (Yeni sade isim) -->
     <img id="erenOverlay2" src="eren2.jpg" alt="Eren Yakın Çekim">
 
-    <!-- FİNAL YAZISI (SADECE ÜSTTE) -->
     <div id="trollSubtitle">
       Tüm varoluşsal krizlerine ve çözülemeyen travmalarına rağmen...
       <span class="highlight-cyan">Tebrikler Eren, bir yılı daha hayatta kalarak atlattın!</span>
@@ -309,7 +222,6 @@
     function showError(message) {
       instructionText.style.color = "#ff3366";
       instructionText.innerText = "HATA: " + message;
-      
       setTimeout(() => {
         instructionText.style.color = "#00ffff";
         if (currentStep === 1) instructionText.innerText = "ADIM 1: Önce sağ alttaki hoparlörden müziği aç.";
@@ -318,7 +230,6 @@
       }, 2000);
     }
 
-    // 1. ADIM: HOPARLÖR
     zoneSpeaker.addEventListener('click', () => {
       if (bgMusic.paused) {
         bgMusic.play().catch(err => console.log("Müzik bulunamadı."));
@@ -329,19 +240,14 @@
         zoneSpeaker.style.backgroundColor = "rgba(255, 51, 102, 0.4)";
         setTimeout(() => zoneSpeaker.style.backgroundColor = "transparent", 300);
       }
-
       if (currentStep === 1) {
         currentStep = 2;
         instructionText.innerText = "ADIM 2: Şimdi soldaki hediye kutularını incele.";
       }
     });
 
-    // 2. ADIM: HEDİYELER
     zoneGifts.addEventListener('click', () => {
-      if (currentStep < 2) {
-        showError("Önce müziği açmalısın!");
-        return;
-      }
+      if (currentStep < 2) { showError("Önce müziği açmalısın!"); return; }
       popupOverlay.classList.add('show');
     });
 
@@ -353,12 +259,8 @@
       }
     });
 
-    // 3. ADIM: PASTA VE VİDEO GEÇİŞİ
     zoneCake.addEventListener('click', () => {
-      if (currentStep < 3) {
-        showError("Sırayı bozma! Önceki adımları tamamla.");
-        return;
-      }
+      if (currentStep < 3) { showError("Sırayı bozma! Önceki adımları tamamla."); return; }
 
       if (currentStep === 3) {
         currentStep = 4;
@@ -366,20 +268,14 @@
         instructionText.style.color = "#ffea00"; 
         
         flames.forEach(flame => flame.classList.add('blown-out'));
-        
         confettiSound.play().catch(err => console.log("Konfeti sesi bulunamadı."));
         fireConfetti();
         
         if (!bgMusic.paused) {
           let vol = bgMusic.volume;
           let fadeOut = setInterval(() => {
-            if (vol > 0.1) {
-              vol -= 0.1;
-              bgMusic.volume = vol;
-            } else {
-              clearInterval(fadeOut);
-              bgMusic.pause();
-            }
+            if (vol > 0.1) { vol -= 0.1; bgMusic.volume = vol; } 
+            else { clearInterval(fadeOut); bgMusic.pause(); }
           }, 200); 
         }
 
@@ -393,25 +289,15 @@
       }
     });
 
-    // VİDEO ZAMAN TAKİBİ: FOTOĞRAFLAR VE YAZI AYARLARI
     congratsVideo.addEventListener('timeupdate', () => {
       const time = congratsVideo.currentTime;
-
-      // 1. EREN FOTOĞRAFI (İlk 12 Saniye Göster)
-      if (time > 0 && time < 12) {
-        erenOverlay.style.display = 'block';
-      } else {
-        erenOverlay.style.display = 'none';
-      }
-
-      // 2. YENİ EREN FOTOĞRAFI (32 ve 35. saniyeler arası)
-      if (time >= 32 && time <= 35) {
-        erenOverlay2.style.display = 'block';
-      } else {
-        erenOverlay2.style.display = 'none';
-      }
-
-      // 3. FİNAL TROLL YAZISI (Son 7.5 Saniye Üst Siyah Maske)
+      // 1. FOTO: 0-12 sn
+      if (time > 0 && time < 12) { erenOverlay.style.display = 'block'; } 
+      else { erenOverlay.style.display = 'none'; }
+      // 2. FOTO: 32-35 sn
+      if (time >= 32 && time <= 35) { erenOverlay2.style.display = 'block'; } 
+      else { erenOverlay2.style.display = 'none'; }
+      // YAZI (Son 7.5 sn)
       if (congratsVideo.duration > 0 && (congratsVideo.duration - time) < 7.5) {
         trollSubtitle.style.opacity = '1';
       }
@@ -419,7 +305,6 @@
 
     function fireConfetti() {
       const colors = ['#ff3366', '#00ffff', '#ffea00', '#ffffff', '#b300ff'];
-      
       const cakeRect = zoneCake.getBoundingClientRect();
       const startX = cakeRect.left + (cakeRect.width / 2);
       const startY = cakeRect.top + (cakeRect.height / 2);
@@ -427,14 +312,12 @@
       for (let i = 0; i < 150; i++) {
         let conf = document.createElement('div');
         conf.classList.add('confetti');
-        
         conf.style.left = startX + 'px';
         conf.style.top = startY + 'px';
         conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
         
         const angle = Math.random() * Math.PI * 2;
         const velocity = 100 + Math.random() * 400;
-        
         const tx = Math.cos(angle) * velocity;
         const ty = (Math.sin(angle) * velocity) - 200;
         
@@ -443,9 +326,7 @@
         
         const duration = 1 + Math.random() * 1.5;
         conf.style.animation = `explode ${duration}s cubic-bezier(0.1, 0.8, 0.3, 1) forwards`;
-        
         document.body.appendChild(conf);
-        
         setTimeout(() => conf.remove(), duration * 1000);
       }
     }
