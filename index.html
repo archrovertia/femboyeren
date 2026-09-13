@@ -187,14 +187,14 @@
       object-fit: contain;
     }
 
-    /* TROLL ALT YAZI KAPATICI MASKESİ (SİYAH KUTU) */
+    /* TROLL ALT YAZI KAPATICI MASKESİ (ÜST KISIM İÇİN GÜNCELLENDİ) */
     #trollSubtitle {
       position: absolute;
-      bottom: 0;
+      top: 0; /* Artık yazımız ekranın en üstünde! */
       left: 0;
       width: 100%;
-      height: 35vh; 
-      background: #000; 
+      height: 40vh; /* Ekranın üstteki %40'lık kısmını siyahla örter */
+      background: #000; /* Orijinal yazıyı kapatan siyah arka plan */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -249,7 +249,7 @@
   <div id="videoContainer">
     <video id="congratsVideo" src="evangelion.mp4" playsinline></video>
     
-    <!-- ALT YAZIYI ÖRTECEK OLAN YAZIMIZ (GÜNCELLENDİ) -->
+    <!-- ALT YAZIYI ÖRTECEK OLAN YAZIMIZ (SİYAH KUTU) -->
     <div id="trollSubtitle">
       Tüm varoluşsal krizlerine ve çözülemeyen travmalarına rağmen...<br>
       <span class="highlight-cyan">Tebrikler Eren, bir yılı daha hayatta kalarak atlattın!</span>
@@ -363,6 +363,7 @@
 
     // VİDEO ZAMAN TAKİBİ VE TROLL YAZI ÇIKARMASI
     congratsVideo.addEventListener('timeupdate', () => {
+      // Orijinal videonun son ~7.5 saniyesinde bizim maskemiz ve yazımız belirir
       if (congratsVideo.duration > 0 && (congratsVideo.duration - congratsVideo.currentTime) < 7.5) {
         trollSubtitle.style.opacity = '1';
       }
@@ -387,4 +388,3 @@
   </script>
 </body>
 </html>
-
