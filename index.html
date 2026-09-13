@@ -26,11 +26,16 @@
       z-index: 10;
     }
 
+    /* Dinamik Yönerge Metni */
     .instruction {
       font-size: 18px;
-      color: #aaaaaa;
+      color: #00ffff;
       margin-bottom: 20px;
       z-index: 10;
+      text-align: center;
+      min-height: 25px;
+      transition: color 0.3s ease;
+      font-weight: bold;
     }
 
     /* ANA RESİM VE ETKİLEŞİM ALANI */
@@ -177,31 +182,54 @@
 
     #congratsVideo {
       width: 100%;
+      height: 100%;
       max-height: 100vh;
       object-fit: contain;
     }
+
+    /* TROLL ALT YAZI KAPATICI MASKESİ (SİYAH KUTU) */
+    #trollSubtitle {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 35vh; 
+      background: #000; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: clamp(20px, 3vw, 28px);
+      text-align: center;
+      line-height: 1.6;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 10001;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+    
+    .highlight-pink { color: #ff3366; font-weight: bold; }
+    .highlight-cyan { color: #00ffff; font-weight: bold; }
 
   </style>
 </head>
 <body>
 
   <h1>MUTLU YILLAR EREN</h1>
-  <p class="instruction">Odadaki eşyalara tıklayarak etkileşime geç.</p>
+  
+  <p class="instruction" id="instructionText">ADIM 1: Önce sağ alttaki hoparlörden müziği aç.</p>
 
-  <!-- Müzik Çalar -->
+  <!-- SES DOSYALARI -->
   <audio id="bgMusic" src="eren-muzik.mp3" preload="auto" loop></audio>
+  <audio id="confettiSound" src="konfeti-sesi.mp3" preload="auto"></audio>
 
   <div class="meme-container">
-    <!-- ANA RESİM -->
     <img src="image_b7e632.jpg" alt="Rei Chiquita" class="rei-img">
-
-    <!-- 1. ETKİLEŞİM: HEDİYELER -->
     <div id="zone-gifts" class="clickable-zone" title="Hediyeleri Aç"></div>
-
-    <!-- 2. ETKİLEŞİM: HOPARLÖR -->
     <div id="zone-speaker" class="clickable-zone" title="Müziği Aç / Kapat"></div>
-
-    <!-- 3. ETKİLEŞİM: PASTA VE MUMLAR -->
     <div id="zone-cake" class="clickable-zone" title="Mumları Üfle!">
       <div class="flame"></div>
       <div class="flame"></div>
@@ -209,7 +237,6 @@
     </div>
   </div>
 
-  <!-- POPUP KUTUSU -->
   <div class="popup-overlay" id="popupOverlay">
     <div class="popup-content">
       <h3 id="popTitle">Hediye Açıldı!</h3>
@@ -218,9 +245,15 @@
     </div>
   </div>
 
-  <!-- FİNAL VİDEO EKRANI -->
+  <!-- FİNAL VİDEO EKRANI VE TROLL ALT YAZI -->
   <div id="videoContainer">
     <video id="congratsVideo" src="evangelion.mp4" playsinline></video>
+    
+    <!-- ALT YAZIYI ÖRTECEK OLAN YAZIMIZ (GÜNCELLENDİ) -->
+    <div id="trollSubtitle">
+      Tüm varoluşsal krizlerine ve çözülemeyen travmalarına rağmen...<br>
+      <span class="highlight-cyan">Tebrikler Eren, bir yılı daha hayatta kalarak atlattın!</span>
+    </div>
   </div>
 
   <script>
@@ -229,25 +262,31 @@
     const zoneCake = document.getElementById('zone-cake');
     const flames = document.querySelectorAll('.flame');
     const bgMusic = document.getElementById('bgMusic');
+    const confettiSound = document.getElementById('confettiSound');
     
     const popupOverlay = document.getElementById('popupOverlay');
     const closePopup = document.getElementById('closePopup');
     
     const videoContainer = document.getElementById('videoContainer');
     const congratsVideo = document.getElementById('congratsVideo');
+    const instructionText = document.getElementById('instructionText');
+    const trollSubtitle = document.getElementById('trollSubtitle');
     
-    let candlesBlown = false;
+    let currentStep = 1; 
 
-    // 1. HEDİYELER
-    zoneGifts.addEventListener('click', () => {
-      popupOverlay.classList.add('show');
-    });
+    function showError(message) {
+      instructionText.style.color = "#ff3366";
+      instructionText.innerText = "HATA: " + message;
+      
+      setTimeout(() => {
+        instructionText.style.color = "#00ffff";
+        if (currentStep === 1) instructionText.innerText = "ADIM 1: Önce sağ alttaki hoparlörden müziği aç.";
+        else if (currentStep === 2) instructionText.innerText = "ADIM 2: Şimdi soldaki hediye kutularını incele.";
+        else if (currentStep === 3) instructionText.innerText = "ADIM 3: Son olarak pastadaki mumları üfle (tıkla).";
+      }, 2000);
+    }
 
-    closePopup.addEventListener('click', () => {
-      popupOverlay.classList.remove('show');
-    });
-
-    // 2. HOPARLÖR
+    // 1. ADIM: HOPARLÖR
     zoneSpeaker.addEventListener('click', () => {
       if (bgMusic.paused) {
         bgMusic.play().catch(err => console.log("Müzik bulunamadı."));
@@ -258,20 +297,47 @@
         zoneSpeaker.style.backgroundColor = "rgba(255, 51, 102, 0.4)";
         setTimeout(() => zoneSpeaker.style.backgroundColor = "transparent", 300);
       }
+
+      if (currentStep === 1) {
+        currentStep = 2;
+        instructionText.innerText = "ADIM 2: Şimdi soldaki hediye kutularını incele.";
+      }
     });
 
-    // 3. PASTA (MUMLARI ÜFLE, KONFETİ VE VİDEO GEÇİŞİ)
+    // 2. ADIM: HEDİYELER
+    zoneGifts.addEventListener('click', () => {
+      if (currentStep < 2) {
+        showError("Önce müziği açmalısın!");
+        return;
+      }
+      popupOverlay.classList.add('show');
+    });
+
+    closePopup.addEventListener('click', () => {
+      popupOverlay.classList.remove('show');
+      if (currentStep === 2) {
+        currentStep = 3;
+        instructionText.innerText = "ADIM 3: Son olarak pastadaki mumları üfle (tıkla).";
+      }
+    });
+
+    // 3. ADIM: PASTA VE VİDEO GEÇİŞİ
     zoneCake.addEventListener('click', () => {
-      if (!candlesBlown) {
-        candlesBlown = true;
+      if (currentStep < 3) {
+        showError("Sırayı bozma! Önceki adımları tamamla.");
+        return;
+      }
+
+      if (currentStep === 3) {
+        currentStep = 4;
+        instructionText.innerText = "KUTLAMA PROTOKOLÜ BAŞLATILIYOR...";
+        instructionText.style.color = "#ffea00"; 
         
-        // Ateşleri söndür
         flames.forEach(flame => flame.classList.add('blown-out'));
         
-        // Konfetileri patlat
+        confettiSound.play().catch(err => console.log("Konfeti sesi bulunamadı."));
         fireConfetti();
         
-        // Arkadaki müziği yavaşça kıs (Fade-out efekti)
         if (!bgMusic.paused) {
           let vol = bgMusic.volume;
           let fadeOut = setInterval(() => {
@@ -282,24 +348,26 @@
               clearInterval(fadeOut);
               bgMusic.pause();
             }
-          }, 200); // Her 200ms'de bir sesi kıs
+          }, 200); 
         }
 
-        // 3 saniye sonra videoyu ekrana getir ve oynat
         setTimeout(() => {
           videoContainer.style.display = 'flex';
-          
-          // CSS transition'ın çalışması için ufak bir gecikme
           setTimeout(() => {
             videoContainer.style.opacity = '1';
-            congratsVideo.play().catch(err => console.log("Tarayıcı videoyu otomatik başlatmayı engelledi:", err));
+            congratsVideo.play().catch(err => console.log("Video başlatılamadı:", err));
           }, 50);
-          
         }, 3000);
       }
     });
 
-    // KONFETİ OLUŞTURUCU FONKSİYON
+    // VİDEO ZAMAN TAKİBİ VE TROLL YAZI ÇIKARMASI
+    congratsVideo.addEventListener('timeupdate', () => {
+      if (congratsVideo.duration > 0 && (congratsVideo.duration - congratsVideo.currentTime) < 7.5) {
+        trollSubtitle.style.opacity = '1';
+      }
+    });
+
     function fireConfetti() {
       const colors = ['#ff3366', '#00ffff', '#ffea00', '#ffffff', '#b300ff'];
       
@@ -313,10 +381,7 @@
         conf.style.animationDelay = (Math.random() * 0.5) + 's';
         
         document.body.appendChild(conf);
-        
-        setTimeout(() => {
-          conf.remove();
-        }, 5000);
+        setTimeout(() => conf.remove(), 5000);
       }
     }
   </script>
