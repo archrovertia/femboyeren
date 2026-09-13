@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eren'in Doğum Günü - NERV Gizli Odası</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background-color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Courier New', Courier, monospace;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    h1 {
+      color: #ff3366;
+      text-shadow: 2px 2px 0px #00ffff;
+      margin-bottom: 10px;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .instruction {
+      font-size: 18px;
+      color: #aaaaaa;
+      margin-bottom: 20px;
+      z-index: 10;
+    }
+
+    /* ANA RESİM VE ETKİLEŞİM ALANI */
+    .meme-container {
+      position: relative;
+      width: 90%;
+      max-width: 600px;
+      border: 4px solid #fff;
+      box-shadow: 10px 10px 0px rgba(255, 51, 102, 0.5);
+      background-color: #fff;
+    }
+
+    .rei-img {
+      width: 100%;
+      display: block;
+    }
+
+    /* GÖRÜNMEZ TIKLANABİLİR BÖLGELER */
+    .clickable-zone {
+      position: absolute;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      border-radius: 10px;
+    }
+
+    .clickable-zone:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    #zone-gifts {
+      bottom: 2%;
+      left: 2%;
+      width: 25%;
+      height: 25%;
+    }
+
+    #zone-speaker {
+      bottom: 2%;
+      right: 2%;
+      width: 20%;
+      height: 25%;
+    }
+
+    #zone-cake {
+      bottom: 16%;
+      left: 38%;
+      width: 24%;
+      height: 18%;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: flex-start;
+      padding-top: 5%;
+      box-sizing: border-box;
+    }
+
+    /* HAREKETLİ ALEVLER */
+    .flame {
+      width: 12px;
+      height: 20px;
+      background: #ff9100;
+      border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+      box-shadow: 0 0 10px #ffea00, 0 0 20px #ff9100;
+      animation: flicker 0.15s infinite alternate;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .flame.blown-out {
+      opacity: 0;
+      transform: scale(0.1) translateY(-20px);
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-3deg); }
+      100% { transform: scale(1.1) rotate(3deg); }
+    }
+
+    /* POPUP MESAJ KUTUSU */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+    }
+
+    .popup-overlay.show {
+      display: flex;
+    }
+
+    .popup-content {
+      background: #1a1a1a;
+      padding: 30px;
+      border: 3px solid #00ffff;
+      border-radius: 0;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 8px 8px 0px #ff3366;
+    }
+
+    .popup-content h3 { color: #00ffff; margin-top: 0; }
+    .popup-content p { color: #fff; font-size: 18px; line-height: 1.5; }
+    
+    .close-btn {
+      background: #ff3366;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    /* KONFETİ EFEKTİ */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      z-index: 9999;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(720deg); }
+    }
+
+    /* FİNAL VİDEO EKRANI */
+    #videoContainer {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    #congratsVideo {
+      width: 100%;
+      max-height: 100vh;
+      object-fit: contain;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>MUTLU YILLAR EREN</h1>
+  <p class="instruction">Odadaki eşyalara tıklayarak etkileşime geç.</p>
+
+  <!-- Müzik Çalar -->
+  <audio id="bgMusic" src="eren-muzik.mp3" preload="auto" loop></audio>
+
+  <div class="meme-container">
+    <!-- ANA RESİM -->
+    <img src="image_b7e632.jpg" alt="Rei Chiquita" class="rei-img">
+
+    <!-- 1. ETKİLEŞİM: HEDİYELER -->
+    <div id="zone-gifts" class="clickable-zone" title="Hediyeleri Aç"></div>
+
+    <!-- 2. ETKİLEŞİM: HOPARLÖR -->
+    <div id="zone-speaker" class="clickable-zone" title="Müziği Aç / Kapat"></div>
+
+    <!-- 3. ETKİLEŞİM: PASTA VE MUMLAR -->
+    <div id="zone-cake" class="clickable-zone" title="Mumları Üfle!">
+      <div class="flame"></div>
+      <div class="flame"></div>
+      <div class="flame"></div>
+    </div>
+  </div>
+
+  <!-- POPUP KUTUSU -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+      <h3 id="popTitle">Hediye Açıldı!</h3>
+      <p id="popText">Kutunun içinden kocaman bir HİÇ çıktı! (Çünkü Rei sana hediye almayı unuttu ama umrunda değil.)</p>
+      <button class="close-btn" id="closePopup">KABUL ET</button>
+    </div>
+  </div>
+
+  <!-- FİNAL VİDEO EKRANI -->
+  <div id="videoContainer">
+    <video id="congratsVideo" src="evangelion.mp4" playsinline></video>
+  </div>
+
+  <script>
+    const zoneGifts = document.getElementById('zone-gifts');
+    const zoneSpeaker = document.getElementById('zone-speaker');
+    const zoneCake = document.getElementById('zone-cake');
+    const flames = document.querySelectorAll('.flame');
+    const bgMusic = document.getElementById('bgMusic');
+    
+    const popupOverlay = document.getElementById('popupOverlay');
+    const closePopup = document.getElementById('closePopup');
+    
+    const videoContainer = document.getElementById('videoContainer');
+    const congratsVideo = document.getElementById('congratsVideo');
+    
+    let candlesBlown = false;
+
+    // 1. HEDİYELER
+    zoneGifts.addEventListener('click', () => {
+      popupOverlay.classList.add('show');
+    });
+
+    closePopup.addEventListener('click', () => {
+      popupOverlay.classList.remove('show');
+    });
+
+    // 2. HOPARLÖR
+    zoneSpeaker.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play().catch(err => console.log("Müzik bulunamadı."));
+        zoneSpeaker.style.backgroundColor = "rgba(0, 255, 255, 0.4)";
+        setTimeout(() => zoneSpeaker.style.backgroundColor = "transparent", 300);
+      } else {
+        bgMusic.pause();
+        zoneSpeaker.style.backgroundColor = "rgba(255, 51, 102, 0.4)";
+        setTimeout(() => zoneSpeaker.style.backgroundColor = "transparent", 300);
+      }
+    });
+
+    // 3. PASTA (MUMLARI ÜFLE, KONFETİ VE VİDEO GEÇİŞİ)
+    zoneCake.addEventListener('click', () => {
+      if (!candlesBlown) {
+        candlesBlown = true;
+        
+        // Ateşleri söndür
+        flames.forEach(flame => flame.classList.add('blown-out'));
+        
+        // Konfetileri patlat
+        fireConfetti();
+        
+        // Arkadaki müziği yavaşça kıs (Fade-out efekti)
+        if (!bgMusic.paused) {
+          let vol = bgMusic.volume;
+          let fadeOut = setInterval(() => {
+            if (vol > 0.1) {
+              vol -= 0.1;
+              bgMusic.volume = vol;
+            } else {
+              clearInterval(fadeOut);
+              bgMusic.pause();
+            }
+          }, 200); // Her 200ms'de bir sesi kıs
+        }
+
+        // 3 saniye sonra videoyu ekrana getir ve oynat
+        setTimeout(() => {
+          videoContainer.style.display = 'flex';
+          
+          // CSS transition'ın çalışması için ufak bir gecikme
+          setTimeout(() => {
+            videoContainer.style.opacity = '1';
+            congratsVideo.play().catch(err => console.log("Tarayıcı videoyu otomatik başlatmayı engelledi:", err));
+          }, 50);
+          
+        }, 3000);
+      }
+    });
+
+    // KONFETİ OLUŞTURUCU FONKSİYON
+    function fireConfetti() {
+      const colors = ['#ff3366', '#00ffff', '#ffea00', '#ffffff', '#b300ff'];
+      
+      for (let i = 0; i < 150; i++) {
+        let conf = document.createElement('div');
+        conf.classList.add('confetti');
+        
+        conf.style.left = Math.random() * 100 + 'vw';
+        conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        conf.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        conf.style.animationDelay = (Math.random() * 0.5) + 's';
+        
+        document.body.appendChild(conf);
+        
+        setTimeout(() => {
+          conf.remove();
+        }, 5000);
+      }
+    }
+  </script>
+</body>
+</html>
